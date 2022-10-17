@@ -1,7 +1,3 @@
-const Web3 = require("web3");
-const crypto = require("crypto");
-
-const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
 let address;
 
 exports.getMessage = (req, res, next) => {

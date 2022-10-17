@@ -11,9 +11,12 @@ const UserSchema = new Schema({
             {
                 contractAddr: {
                     type: String,
+                    ref: "Nft",
                     required: true,
                 },
             },
         ],
     },
 });
+
+module.exports = mongoose.model("user", UserSchema);
