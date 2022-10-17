@@ -2,6 +2,7 @@ const express = require("express");
 const Moralis = require("moralis").default;
 const { EvmChain } = require("@moralisweb3/evm-utils");
 const AuthRoutes = require("./routes/auth");
+const NftRoutes = require("./routes/nft");
 const utils = require("./utils/utils");
 
 const app = express();
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.use(AuthRoutes);
+app.use(NftRoutes);
 
 const startServer = async () => {
     await Moralis.start({
@@ -40,22 +42,21 @@ const startServer = async () => {
 
 //moralis
 const chain = utils.chain;
-const address = "0xb00492a72557b778CB31270E78D27716d6340BbF";
-const tokenId = 5;
+const address = "0xaFdD606dc2F29Fd4c02025F6F1AAE842322d0266";
+const tokenId = 1;
 
-async function getDemoData() {
-    const response = await Moralis.EvmApi.nft.getNFTMetadata({
-        address,
-        chain,
-        tokenId,
-    });
-    console.log(response);
-}
+// async function getDemoData() {
+//     const response = await Moralis.EvmApi.nft.getNFTMetadata({
+//         address,
+//         chain,
+//         tokenId,
+//     });
+//     console.log(response.data.metadata);
+// }
 
 app.listen(3000, () => {
     console.log("listening on port 3000");
 });
 
 startServer();
-
-getDemoData();
+// getDemoData();
