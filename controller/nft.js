@@ -16,6 +16,7 @@ async function getDemoData(address, tokenId) {
 
 exports.getHeroNFTs = async (req, res, next) => {
     try {
+        console.log("hero");
         const nftData = await getDemoData(myAddress, myTokenId);
         console.log(nftData);
         res.status(200).json({
@@ -23,7 +24,7 @@ exports.getHeroNFTs = async (req, res, next) => {
             data: nftData,
         });
     } catch (error) {
-        console.log("error");
+        console.log(error);
         res.status(500).json({
             message: "nft could not be fetched for some reason",
         });

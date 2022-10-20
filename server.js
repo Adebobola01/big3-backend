@@ -4,12 +4,12 @@ const { EvmChain } = require("@moralisweb3/evm-utils");
 const AuthRoutes = require("./routes/auth");
 const NftRoutes = require("./routes/nft");
 const utils = require("./utils/utils");
+const Web3 = require("web3");
+require("dotenv").config();
 
 const app = express();
 const bodyParser = require("body-parser");
-
-const Web3 = require("web3");
-const crypto = require("crypto");
+const { default: mongoose } = require("mongoose");
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
 
@@ -54,9 +54,17 @@ const tokenId = 1;
 //     console.log(response.data.metadata);
 // }
 
-app.listen(3000, () => {
-    console.log("listening on port 3000");
-});
+try {
+    mongoose.connect(process.env.MongoDB_URI);
+    app.listen(3000);
+    startServer();
+    console.log("connected");
+} catch (error) {
+    console.log("cant connect to db");
+}
 
-startServer();
+// app.listen(3000, () => {
+//     console.log("listening on port 3000");
+// });
+
 // getDemoData();
