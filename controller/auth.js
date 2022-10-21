@@ -28,7 +28,7 @@ exports.verifyAddress = async (req, res, next) => {
             });
         }
 
-        const user = await User.findOne({ address: verifiedAddress });
+        let user = await User.findOne({ address: verifiedAddress });
         if (!user) {
             const newUser = new User({
                 address: verifiedAddress,
