@@ -3,6 +3,7 @@ const Moralis = require("moralis").default;
 const { EvmChain } = require("@moralisweb3/evm-utils");
 const AuthRoutes = require("./routes/auth");
 const NftRoutes = require("./routes/nft");
+const userRoutes = require("./routes/user");
 const utils = require("./utils/utils");
 const Web3 = require("web3");
 require("dotenv").config();
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 
 app.use(AuthRoutes);
 app.use(NftRoutes);
+app.use(userRoutes);
 
 const startServer = async () => {
     await Moralis.start({
