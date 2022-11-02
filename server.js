@@ -36,6 +36,14 @@ app.use(AuthRoutes);
 app.use(NftRoutes);
 app.use(userRoutes);
 
+app.use((error, req, res, next) => {
+    console.log(error);
+    const status = error.statusCode || 500;
+    const message = error.message;
+    const data = error.data;
+    res.status(status).json({ message: message, data: data });
+});
+
 const startServer = async () => {
     await Moralis.start({
         apiKey: "jDpsBucRDfOFzklRwF4N71reCRZl1RdF7Qj9fyZhXEaSXTWsbni8zTg1imROXbGe",
@@ -47,23 +55,17 @@ const chain = utils.chain;
 const address = "0xaFdD606dc2F29Fd4c02025F6F1AAE842322d0266";
 const tokenId = 1;
 
-// async function getDemoData() {
-//     const response = await Moralis.EvmApi.nft.getNFTMetadata({
-//         address,
-//         chain,
-//         tokenId,
-//     });
-//     console.log(response.data.metadata);
-// }
-
-try {
-    mongoose.connect(process.env.MongoDB_URI);
-    app.listen(3000);
-    startServer();
-    console.log("connected");
-} catch (error) {
-    console.log("cant connect to db");
-}
+mongoose
+    .connect(process.env.MongoDB_URI)
+    .then((result) => {
+        app.listen(3000, () => {
+            console.log("connected");
+            startServer();
+        });
+    })
+    .catch((error) => {
+        console.log("cant connect to db");
+    });
 
 // app.listen(3000, () => {
 //     console.log("listening on port 3000");

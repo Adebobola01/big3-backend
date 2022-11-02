@@ -1,12 +1,20 @@
 const utils = require("../utils/utils");
 const morApi = require("../utils/moralis");
+const NFT = require("../model/nft");
+const User = require("../model/user");
+
+const getHours = (value, unit) => {
+    if (unit === "hours") return Number(value);
+    else if (unit === "days") return Number(value) * 24;
+    else if (unit === "weeks") return Number(value) * 24 * 7;
+    else if (unit === "months") return Number(value) * 30 * 24;
+};
 
 exports.getUserData = async (req, res, next) => {
     try {
         const addressNfts = [];
         const userAddr = req.body.userAddress;
         const { data } = await morApi.getNfts(userAddr, utils.chain);
-        console.log(data.result);
         data.result.forEach((n) => {
             const nft = {};
             nft.metadata = JSON.parse(n.metadata);
@@ -23,10 +31,48 @@ exports.getUserData = async (req, res, next) => {
             message: "User data fetched successfully!",
         });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            data: [],
-            message: "sorry we could not fetch your data at this time!",
+        if (!error.statusCode && error) {
+            error.statusCode = 500;
+            next(error);
+        }
+        error = new Error("User data could not be loaded at this time!");
+        error.statusCode = 500;
+        next(error);
+    }
+};
+
+exports.listNft = async (req, res, next) => {
+    try {
+        if (await NFT.findOne({ imageUrl: req.body.imageUrl })) {
+            const error = new Error("Nft is already listed!");
+            error.statusCode = 500;
+            throw error;
+        }
+        const duration = getHours(
+            req.body.durationValue,
+            req.body.durationUnit
+        );
+        console.log(req.body);
+        const nft = new NFT({
+            contractAddr: req.body.contractAddr,
+            ownerAddress: req.address,
+            price: req.body.price,
+            imageUrl: req.body.imageUrl,
+            collectionName: req.body.collection,
+            duration: duration,
+            name: req.body.name,
         });
+        listedNFT = await nft.save();
+        const user = await User.findOne({ address: req.address });
+        user.listed.nfts.push(listedNFT._id);
+        user.save();
+        console.log(listedNFT, "NFT listed!");
+        res.status(201).json({ message: "Nft created", data: listedNFT });
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500;
+            next(error);
+        }
+        next(error);
     }
 };

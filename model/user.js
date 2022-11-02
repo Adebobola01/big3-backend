@@ -41,6 +41,14 @@ const UserSchema = new Schema({
             },
         ],
     },
+    listed: {
+        nfts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Nft",
+            },
+        ],
+    },
 });
 
-module.exports = mongoose.model("user", UserSchema);
+module.exports = mongoose.model("User", UserSchema);

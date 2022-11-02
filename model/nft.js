@@ -7,9 +7,27 @@ const nftSchema = new Schema({
         type: String,
         required: true,
     },
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
+    ownerAddress: {
+        type: String,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    imageUrl: {
+        type: String,
+        required: true,
+    },
+    collectionName: {
+        type: String,
+        required: true,
+    },
+    duration: {
+        type: String,
+    },
+    name: {
+        type: String,
         required: true,
     },
 });
