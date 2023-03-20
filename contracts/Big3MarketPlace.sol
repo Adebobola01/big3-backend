@@ -9,7 +9,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Big3Marketplace is ERC721, Ownable {
 );
 
-    constructor(uint _unlockTime) payable {
+    constructor() ERC721("big3 NFT", "B3") {
+        
+    }
+
+    function mint() public {
         
     }
 
