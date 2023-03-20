@@ -58,8 +58,8 @@ const tokenId = 1;
 mongoose
     .connect(process.env.MongoDB_URI)
     .then((result) => {
-        app.listen(3000, () => {
-            console.log("connected");
+        app.listen(5000, () => {
+            console.log("connected at localhost:5000");
             startServer();
         });
     })

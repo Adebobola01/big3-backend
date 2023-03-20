@@ -61,6 +61,7 @@ exports.getMessage = (req, res, next) => {
 };
 
 exports.verifyAddress = async (req, res, next) => {
+    console.log("here")
     const message = req.body.message;
     const signature = req.body.signature;
     const verifiedAddr = await web3.eth.accounts.recover(message, signature);
