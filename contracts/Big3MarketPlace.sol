@@ -7,15 +7,22 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // import "hardhat/console.sol";
 
 contract Big3Marketplace is ERC721, Ownable {
-);
+    uint256 public price;
+
 
     constructor() ERC721("big3 NFT", "B3") {
         
     }
 
     function mint() public {
-        
+
     }
+
+    function _setPrice(uint256 _price) public onlyOwner{
+        price = _price ether;
+    }
+
+
 
     function withdraw() public {
         // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
