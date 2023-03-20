@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Big3Marketplace is ERC721, Ownable {
     uint256 public price;
+    uint256 public maxSupply;
 
 
     constructor() ERC721("big3 NFT", "B3") {
@@ -20,6 +21,10 @@ contract Big3Marketplace is ERC721, Ownable {
 
     function _setPrice(uint256 _price) public onlyOwner{
         price = _price ether;
+    }
+
+    function _setSupply(uint256 _maxSupply) public onlyOwner{
+        maxSupply = _maxSupply;
     }
 
 
