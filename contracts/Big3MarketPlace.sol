@@ -1,21 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
-import "@openzeppelin/contracts/"
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
 
-contract Big3Marketplace {
+contract Big3Marketplace is ERC721, Ownable {
 );
 
     constructor(uint _unlockTime) payable {
-        require(
-            block.timestamp < _unlockTime,
-            "Unlock time should be in the future"
-        );
-
-        unlockTime = _unlockTime;
-        owner = payable(msg.sender);
+        
     }
 
     function withdraw() public {
