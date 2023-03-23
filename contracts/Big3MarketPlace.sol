@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
 
-contract Big3Marketplace is ERC721, Ownable {
+contract Big3Marketplace is ERC721FULL, Ownable {
     uint256 public price;
     uint256 public maxSupply;
 
@@ -16,7 +16,7 @@ contract Big3Marketplace is ERC721, Ownable {
     }
 
     function mint() public {
-
+        _safeMint(msg.sender, tokenId);
     }
 
     function _setPrice(uint256 _price) public onlyOwner{
@@ -27,6 +27,9 @@ contract Big3Marketplace is ERC721, Ownable {
         maxSupply = _maxSupply;
     }
 
+    function _setNFTURI(uint256 _tokenId, string _tokenURI) public {
+        _setTokenURI(_tokenId, _tokenURI);
+    }
 
 
     function withdraw(_amount) public onlyOwner{
