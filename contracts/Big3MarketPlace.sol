@@ -29,9 +29,10 @@ contract Big3Marketplace is ERC721, Ownable {
 
 
 
-    function withdraw() public {
+    function withdraw(_amount) public onlyOwner{
         // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
         // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
+        require(_amount <= address(this).balance, "insufficient balance");
 
         owner.transfer(address(this).balance);
     }
