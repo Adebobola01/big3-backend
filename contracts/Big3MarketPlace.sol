@@ -39,7 +39,7 @@ contract Big3Marketplace is ERC721FULL, Ownable {
         _setTokenURI(_tokenId, _tokenURI);
     }
 
-    function _ baseURI() internal view virtual overrride returns(string memory) {
+    function _baseURI() internal view virtual overrride returns(string memory) {
         return _baseTokenURI;
     }
 
@@ -47,11 +47,15 @@ contract Big3Marketplace is ERC721FULL, Ownable {
         _baseTokenURI = _newBaseURI;
     }
 
-    function withdraw(_amount) public onlyOwner{
+    function withdraw(uint256 _amount) public onlyOwner{
         // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
         // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
         require(_amount <= address(this).balance, "insufficient balance");
 
         owner.transfer(address(this).balance);
+    }
+
+    function list(uint256 _tokenId){
+        approve(address(this), _tokenId);
     }
 }
