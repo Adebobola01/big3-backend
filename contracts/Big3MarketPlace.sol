@@ -12,18 +12,23 @@ contract Big3Marketplace is ERC721FULL, Ownable {
     uint256 public maxSupply;
     string private _baseTokenURI;
     using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
+    Counters.Counter private _tokenId;
 
     constructor() ERC721("big3 NFT", "B3") {
         
     }
 
     function mint() public {
-        _safeMint(msg.sender, tokenId);
+        uint256 _newTokenId = _tokenId.increment();
+        _safeMint(msg.sender, _newTokenId);
     }
 
     function _setPrice(uint256 _price) public onlyOwner{
         price = _price ether;
+    }
+
+    function _getTokenId() public view returns (uint256){
+        return _tokenId;
     }
 
     function _setMaxSupply(uint256 _maxSupply) public onlyOwner{
