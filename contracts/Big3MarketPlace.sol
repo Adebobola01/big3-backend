@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 // Uncomment this line to use console.log
@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Big3Marketplace is ERC721FULL, Ownable {
     uint256 public price;
     uint256 public maxSupply;
-
+    string private _baseTokenURI;
 
     constructor() ERC721("big3 NFT", "B3") {
         
@@ -27,10 +27,17 @@ contract Big3Marketplace is ERC721FULL, Ownable {
         maxSupply = _maxSupply;
     }
 
-    function _setNFTURI(uint256 _tokenId, string _tokenURI) public {
+    function _baseURI(uint256 _tokenId, string _tokenURI) public {
         _setTokenURI(_tokenId, _tokenURI);
     }
 
+    function _ baseURI() internal view virtual overrride returns(string memory) {
+        return _baseTokenURI;
+    }
+
+    function _setBaseURI(string calldata _newBaseURI) public {
+        _baseTokenURI = _newBaseURI;
+    }
 
     function withdraw(_amount) public onlyOwner{
         // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
