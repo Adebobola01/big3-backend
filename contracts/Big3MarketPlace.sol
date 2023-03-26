@@ -2,6 +2,7 @@
 pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC721/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
@@ -10,6 +11,8 @@ contract Big3Marketplace is ERC721FULL, Ownable {
     uint256 public price;
     uint256 public maxSupply;
     string private _baseTokenURI;
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
 
     constructor() ERC721("big3 NFT", "B3") {
         
@@ -23,7 +26,7 @@ contract Big3Marketplace is ERC721FULL, Ownable {
         price = _price ether;
     }
 
-    function _setSupply(uint256 _maxSupply) public onlyOwner{
+    function _setMaxSupply(uint256 _maxSupply) public onlyOwner{
         maxSupply = _maxSupply;
     }
 
