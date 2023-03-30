@@ -5,14 +5,22 @@ const AuthRoutes = require("./routes/auth");
 const NftRoutes = require("./routes/nft");
 const userRoutes = require("./routes/user");
 const utils = require("./utils/utils");
+
+const { ethers } = require("ethers");
 const Web3 = require("web3");
+const web3 = new Web3(process.env.INFURA_URL);
+console.log(web3);
 require("dotenv").config();
+
+
+
+let provider;
+let signer;
 
 const app = express();
 const bodyParser = require("body-parser");
 const { default: mongoose } = require("mongoose");
 
-const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
 
 app.use(bodyParser.json());
 
@@ -46,7 +54,7 @@ app.use((error, req, res, next) => {
 
 const startServer = async () => {
     await Moralis.start({
-        apiKey: "jDpsBucRDfOFzklRwF4N71reCRZl1RdF7Qj9fyZhXEaSXTWsbni8zTg1imROXbGe",
+        apiKey: process.env.MORALIS_KEY,
     });
 };
 
@@ -55,18 +63,22 @@ const chain = utils.chain;
 const address = "0xaFdD606dc2F29Fd4c02025F6F1AAE842322d0266";
 const tokenId = 1;
 
+
 mongoose
     .connect(process.env.MongoDB_URI)
-    .then((result) => {
+    .then(async (result) => {
         app.listen(5000, () => {
             console.log("connected at localhost:5000");
             startServer();
         });
     })
     .catch((error) => {
-        console.log("cant connect to db");
+        console.log(error)
+        // console.log("cant connect to db");
     });
 
+
+module.exports = { provider, signer };
 // app.listen(3000, () => {
 //     console.log("listening on port 3000");
 // });

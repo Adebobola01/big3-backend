@@ -20,7 +20,6 @@ exports.getCode = (req,res, next) => {
         access_type: 'offline',
         scope: SCOPES,
     });
-    console.log(authUrl, "auth")
     res.status(200).json({
         urlAuth: authUrl
     });
@@ -42,11 +41,8 @@ async function verify(_token) {
 exports.getAccessToken = async (req, res, next) => {
     try {   
         const code = req.body.code
-        console.log(code, "code")
         const { tokens } = await client.getToken(code);
-        console.log(tokens.id_token)
         const payload = await verify(tokens.id_token)
-        console.log(payload)
     } catch (error) {
         console.log(error)
     } 
@@ -61,7 +57,6 @@ exports.getMessage = (req, res, next) => {
 };
 
 exports.verifyAddress = async (req, res, next) => {
-    console.log("here")
     const message = req.body.message;
     const signature = req.body.signature;
     const verifiedAddr = await web3.eth.accounts.recover(message, signature);
