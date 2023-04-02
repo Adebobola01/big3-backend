@@ -28,6 +28,10 @@ contract Big3Marketplace is ERC721, Ownable {
         price = _price;
     }
 
+    function _getPrice() public view returns(uint256){
+        return price;
+    }
+
     function _getTokenId() public view returns (uint256){
         return _tokenId.current();
     }
@@ -35,6 +39,11 @@ contract Big3Marketplace is ERC721, Ownable {
     function _setMaxSupply(uint256 _maxSupply) public onlyOwner{
         maxSupply = _maxSupply;
     }
+
+    function _getSupply() public view returns (uint256){
+        return maxSupply;
+    }
+
 
     function _baseURI() internal view virtual override returns(string memory) {
         return _baseTokenURI;

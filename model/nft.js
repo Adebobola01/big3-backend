@@ -9,6 +9,7 @@ const nftSchema = new Schema({
     },
     ownerAddress: {
         type: String,
+        ref: "User",
         required: true,
     },
     price: {
@@ -32,4 +33,4 @@ const nftSchema = new Schema({
     },
 });
 
-module.exports = mongoose.model("Nft", nftSchema);
+module.exports = mongoose.model("listed", nftSchema);

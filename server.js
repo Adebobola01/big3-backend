@@ -7,15 +7,8 @@ const userRoutes = require("./routes/user");
 const utils = require("./utils/utils");
 
 const { ethers } = require("ethers");
-const Web3 = require("web3");
-const web3 = new Web3(process.env.INFURA_URL);
-console.log(web3);
+
 require("dotenv").config();
-
-
-
-let provider;
-let signer;
 
 const app = express();
 const bodyParser = require("body-parser");
@@ -77,8 +70,6 @@ mongoose
         // console.log("cant connect to db");
     });
 
-
-module.exports = { provider, signer };
 // app.listen(3000, () => {
 //     console.log("listening on port 3000");
 // });

@@ -17,36 +17,24 @@ const UserSchema = new Schema({
             {
                 contractAddr: {
                     type: String,
-                    ref: "Nft",
                     required: true,
                 },
-                metaData: {
-                    type: JSON,
-                    required: true,
-                },
-            },
-        ],
-    },
-    collected: {
-        nfts: [
-            {
-                contractAddr: {
+                name: {
                     type: String,
-                    ref: "Nft",
                     required: true,
                 },
-                metaData: {
-                    type: JSON,
+                imageUrl: {
+                    type: String,
                     required: true,
                 },
-            },
-        ],
-    },
-    listed: {
-        nfts: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "Nft",
+                description: {
+                    type: String,
+                    required: true,
+                },
+                traits: {
+                    type: Array,
+                    required: true,
+                }
             },
         ],
     },
