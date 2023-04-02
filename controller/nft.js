@@ -6,6 +6,7 @@ const myTokenId = 1;
 const big3 = require("../artifacts/contracts/Big3MarketPlace.sol/Big3Marketplace.json");
 const Nft = require("../model/nft");
 const { ethers, JsonRpcProvider } = require("ethers");
+const User = require("../model/user");
 
 let provider;
 let signer;
@@ -45,8 +46,13 @@ exports.getHeroNFTs = async (req, res, next) => {
 
 
 exports.createNft = async (req, res, next) => {
-    const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", big3.abi, signer);
-    const tx = await contract.mint();
-    await tx.wait();
-    console.log(tx);
+    // const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", big3.abi, signer);
+    // const tx = await contract.mint();
+    // await tx.wait();
+    // console.log(tx);
+
+    const data = req.body.data;
+    const user = await User.findOne({ address: req.address });
+    console.log(data)
+    // user.created.push(data);
 }

@@ -12,32 +12,30 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    created: {
-        nfts: [
-            {
-                contractAddr: {
-                    type: String,
-                    required: true,
-                },
-                name: {
-                    type: String,
-                    required: true,
-                },
-                imageUrl: {
-                    type: String,
-                    required: true,
-                },
-                description: {
-                    type: String,
-                    required: true,
-                },
-                traits: {
-                    type: Array,
-                    required: true,
-                }
+    created: [
+        {
+            contractAddr: {
+                type: String,
+                required: true,
             },
-        ],
-    },
+            name: {
+                type: String,
+                required: true,
+            },
+            imageUrl: {
+                type: String,
+                required: true,
+            },
+            description: {
+                type: String,
+                required: true,
+            },
+            traits: {
+                type: Array,
+                required: true,
+            }
+        },
+    ],
 });
 
 module.exports = mongoose.model("User", UserSchema);
