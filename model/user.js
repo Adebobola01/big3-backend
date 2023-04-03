@@ -17,6 +17,7 @@ const UserSchema = new Schema({
             contractAddr: {
                 type: String,
                 required: true,
+                default: "",
             },
             name: {
                 type: String,
