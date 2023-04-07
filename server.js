@@ -6,7 +6,7 @@ const NftRoutes = require("./routes/nft");
 const userRoutes = require("./routes/user");
 const utils = require("./utils/utils");
 
-const { ethers } = require("ethers");
+// const { ethers } = require("ethers");
 
 require("dotenv").config();
 

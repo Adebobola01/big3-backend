@@ -1,7 +1,7 @@
 let address;
 const Web3 = require("web3");
 const crypto = require("crypto");
-const web3 = new Web3(Web3.givenProvider);
+const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 const User = require("../model/user");
 const jwt = require("jsonwebtoken");
 const user = require("../model/user");
@@ -97,7 +97,9 @@ exports.verifyAddress = async (req, res, next) => {
             userId: user._id.toString(),
         });
     } catch (error) {
-        console.log(error, "check user error");
+        res.status(500).json({
+            error: error.message
+        })
     }
 };
 

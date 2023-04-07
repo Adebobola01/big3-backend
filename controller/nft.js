@@ -2,23 +2,24 @@ const utils = require("../utils/utils");
 const morApis = require("../utils/moralis");
 const chain = utils.chain;
 const myAddress = "0xaFdD606dc2F29Fd4c02025F6F1AAE842322d0266";
+// const myAddress = "00x3427bfe887eEc6E1C1e0F2b485800B5A9A7c633F";
 const myTokenId = 1;
 const big3 = require("../artifacts/contracts/Big3MarketPlace.sol/Big3Marketplace.json");
 const Nft = require("../model/nft");
-const { ethers, JsonRpcProvider } = require("ethers");
+// const { ethers, JsonRpcProvider } = require("ethers");
 const User = require("../model/user");
 
 let provider;
 let signer;
-const getProvider = async () => {
-    try {
-        provider = new ethers.JsonRpcApiProvider();
-        signer = await provider.getSigner();
-    } catch (error) {
-        console.log(error)
-    }
-}
-getProvider();
+// const getProvider = async () => {
+//     try {
+//         provider = new ethers.JsonRpcApiProvider();
+//         signer = await provider.getSigner();
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+// getProvider();
 // async function getDemoData(address, tokenId) {
 //     const response = await Moralis.EvmApi.nft.getNFTMetadata({
 //         address,
