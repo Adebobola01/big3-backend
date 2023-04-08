@@ -1,16 +1,14 @@
-const { json } = require("express");
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    email: {
-        type: String,
-        required: false,
-    },
     address: {
         type: String,
         required: true,
+    },
+    userEmail: {
+        type: String
     },
     created: [
         {

@@ -1,7 +1,6 @@
-let address;
 const Web3 = require("web3");
 const crypto = require("crypto");
-const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+const web3 = new Web3("http://localhost:8545");
 const User = require("../model/user");
 const jwt = require("jsonwebtoken");
 const user = require("../model/user");
@@ -48,59 +47,35 @@ exports.getAccessToken = async (req, res, next) => {
     } 
 }
 
-exports.getMessage = (req, res, next) => {
-    address = req.body.address;
-    const message = crypto.randomBytes(20).toString("hex");
-    res.status(200).json({
-        message: message,
-    });
-};
-
 exports.verifyAddress = async (req, res, next) => {
-    const message = req.body.message;
-    const signature = req.body.signature;
-    const verifiedAddr = await web3.eth.accounts.recover(message, signature);
-    const verifiedAddress = verifiedAddr.toLowerCase();
+    const address = req.body.address;
 
-    //CHECK IF ADDRESSES MATCH
-    try {
-        if (address !== verifiedAddress) {
-            res.status(401).json({
-                message: "error verifiying address",
-            });
-        }
-
-        let user = await User.findOne({ address: verifiedAddress });
-        if (!user) {
-            const newUser = new User({
-                address: verifiedAddress,
-            });
-            user = await newUser.save();
-        }
-
-        //CREATE AUTH TOKEN
-        const token = jwt.sign(
-            {
-                address: user.address,
-                userId: user._id.toString(),
-            },
-            "big3AuthSignatureVeryImportant",
-            {
-                expiresIn: "24h",
-            }
-        );
-
-        res.status(200).json({
-            token: token,
-            message: "address is verified",
-            address: verifiedAddr,
-            userId: user._id.toString(),
+    let user = await User.findOne({ address: address });
+    if (!user) {
+        const newUser = new User({
+            address: address,
         });
-    } catch (error) {
-        res.status(500).json({
-            error: error.message
-        })
+        user = await newUser.save();
     }
+
+    //CREATE AUTH TOKEN
+    const token = jwt.sign(
+        {
+            address: user.address,
+            userId: user._id.toString(),
+        },
+        "big3AuthSignatureVeryImportant",
+        {
+            expiresIn: "24h",
+        }
+    );
+
+    res.status(200).json({
+        token: token,
+        message: "address is verified",
+        address: address,
+        userId: user._id.toString(),
+    });
 };
 
 exports.google = async (req, res, next) => {

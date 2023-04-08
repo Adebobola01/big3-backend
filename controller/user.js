@@ -14,9 +14,7 @@ exports.getUserData = async (req, res, next) => {
     try {
         const addressNfts = [];
         const userAddr = req.body.userAddress;
-        console.log(userAddr);
         const { data } = await morApi.getNfts(userAddr, utils.chain);
-        console.log(data);
         data.result.forEach((n) => {
             const nft = {};
             nft.metadata = JSON.parse(n.metadata);
