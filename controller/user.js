@@ -38,12 +38,11 @@ exports.getUserData = async (req, res, next) => {
 };
 
 exports.listNft = async (req, res, next) => {
+    console.log(req.body)
     try {
-        if (await NFT.findOne({ imageUrl: req.body.imageUrl })) {
-            const error = new Error("Nft is already listed!");
-            error.statusCode = 500;
-            throw error;
-        }
+        if (await NFT.findOne({ imageUrl: req.body.imageUrl })) 
+            res.status(400).json({ message: "nft already listed" })
+        
         const duration = getHours(
             req.body.durationValue,
             req.body.durationUnit
