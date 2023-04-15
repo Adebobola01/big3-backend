@@ -38,29 +38,26 @@ exports.getUserData = async (req, res, next) => {
 };
 
 exports.listNft = async (req, res, next) => {
-    return console.log(req.body)
     try {
         if (await NFT.findOne({ imageUrl: req.body.imageUrl })) 
             res.status(400).json({ message: "nft already listed" })
         
-        const duration = getHours(
-            req.body.durationValue,
-            req.body.durationUnit
-        );
-        console.log(req.body);
         const nft = new NFT({
-            contractAddr: req.body.contractAddr,
+            contractAddr: req.body.tokenAddress,
             ownerAddress: req.address,
-            price: req.body.price,
-            imageUrl: req.body.imageUrl,
-            collectionName: req.body.collection,
-            duration: duration,
-            name: req.body.name,
+            price: Number(req.body.price),
+            imageUrl: req.body.metadata.image,
+            collectionName: req.body.name,
+            expiryDate: Number(req.body.expiryDate),
+            name: req.body.metadata.name,
+            tokenId: Number(req.body.tokenId),
+            tokenUri: req.body.tokenUri,
+            symbol: req.body.symbol,
+            description: req.body.metadata.description,
         });
         listedNFT = await nft.save();
-        console.log(listedNFT, "NFT listed!");
         res.status(201).json({ message: "Nft created", data: listedNFT });
     } catch (error) {
-        res.status(500).json({message: "could not list nft!"})
+        res.status(500).json({message: "could not list nft!", error: error})
     }
 };

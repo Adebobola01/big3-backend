@@ -6,7 +6,7 @@ const isAuth = require("../middleware/auth");
 // router.post("/profile", isAuth, userController.getUserData);
 // router.post("/list", isAuth, userController.listNft);
 
-router.post("/profile", userController.getUserData);
-router.post("/list", userController.listNft);
+router.post("/profile", isAuth, userController.getUserData);
+router.post("/list", isAuth, userController.listNft);
 
 module.exports = router;

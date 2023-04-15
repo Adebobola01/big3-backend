@@ -24,13 +24,26 @@ const nftSchema = new Schema({
         type: String,
         required: true,
     },
-    duration: {
-        type: String,
+    expiryDate: {
+        type: Number,
     },
     name: {
         type: String,
         required: true,
     },
+    tokenId: {
+        type: Number,
+    },
+    tokenUri: {
+        type: String,
+    },
+    symbol: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model("listed", nftSchema);

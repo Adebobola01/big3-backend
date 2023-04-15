@@ -21,5 +21,6 @@ module.exports = (req, res, next) => {
         throw error;
     }
     req.address = decodedToken.address;
+
     next();
 };
