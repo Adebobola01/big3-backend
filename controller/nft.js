@@ -57,3 +57,14 @@ exports.createNft = async (req, res, next) => {
     console.log(data)
     // user.created.push(data);
 }
+
+exports.getExploreNfts = async (req, res, next) => {
+    const nfts = await Nft.find().exec();
+    res.status(200).json({nfts: nfts, message: "nfts found successfully!"})
+}
+
+exports.getNftDetails = async (req, res, next) => {
+    const nft = await Nft.findOne({ contractAddr: req.body.contractAddress, tokenId: req.body.tokenId });
+    res.status(200).json({message: "nft details loaded successfully", nft: nft})
+    console.log(nft);
+}
