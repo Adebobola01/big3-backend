@@ -2,6 +2,7 @@ const utils = require("../utils/utils");
 const morApi = require("../utils/moralis");
 const NFT = require("../model/nft");
 const User = require("../model/user");
+const nft = require("../model/nft");
 
 const getHours = (value, unit) => {
     if (unit === "hours") return Number(value);
@@ -39,9 +40,8 @@ exports.getUserData = async (req, res, next) => {
 
 exports.listNft = async (req, res, next) => {
     try {
-        if (await NFT.findOne({ imageUrl: req.body.imageUrl })) 
-            res.status(400).json({ message: "nft already listed" })
-        
+        const listed = await NFT.findOne({ contractAddr: req.body.tokenAddress });
+        if(listed?.tokenId == req.body.tokenId) return res.status(400).json({message: "nft already listed!"})
         const nft = new NFT({
             contractAddr: req.body.tokenAddress,
             ownerAddress: req.address,
@@ -55,7 +55,7 @@ exports.listNft = async (req, res, next) => {
             symbol: req.body.symbol,
             description: req.body.metadata.description,
         });
-        listedNFT = await nft.save();
+        const listedNFT = await nft.save();
         res.status(201).json({ message: "Nft created", data: listedNFT });
     } catch (error) {
         res.status(500).json({message: "could not list nft!", error: error})
